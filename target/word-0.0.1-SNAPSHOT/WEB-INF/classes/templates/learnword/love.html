@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>我的收藏</title>
+    <link rel="icon" th:href="@{/style/images/title.ioc}" type="image/x-iocn" />
+    <link rel="stylesheet" th:href="@{/style/css/nav.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{/static/style/css/font-awesome.min.css}" type="text/css" />
+    <script type="text/javascript" th:src="@{/style/js/jquery-2.1.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/style/js/main.js}"></script>
+</head>
+<body>
+    <div class="nav" style="position: relative" >
+        <div class="nav-main">
+            <a class="logo" href="#"><img th:src="@{/style/images/logo.png}"/></a>
+            <ul>
+                <li><a href="/learnword/">首页</a></li>
+                <li><a href="/learnword/word">背单词</a></li>
+                <li><a href="/learnword/review">复习</a></li>
+                <li><a href="/learnword/exam">考试</a></li>
+                <li><a href="/learnword/love">收藏</a></li>
+            </ul>
+            <form action="/learnword/search">
+                <input type="text" name="search" placeholder="查词" />
+                <input class="search" type="image" th:src="@{/style/images/search.png}" />
+            </form>
+            <div id="select" onmouseover="overDiv()" onmouseout="outDiv()">
+                <a class="name" href="#" th:text="${user}?${user.username}:用户名">用户名<img th:src="@{/style/images/navdown.png}"/></a>
+                <div id="select2">
+                    <div class="first">
+                        <a href="/learnword/guide">设置向导</a>
+                        <a href="/logout">退出登录</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div></div>
+    <div style="width:600px;margin:20px auto; text-align: center">
+        <table align='center' border='1' cellspacing='0' >
+            <tr>
+                <td>word</td>
+                <td>meaning</td>
+                <td>删除</td>
+            </tr>
+            <tr th:each="word: ${page.list}">
+                <td th:text="${word.Word}">ss</td>
+                <td th:text="${word.meaning}">ss</td>
+                <td><a th:href="@{deletelove(ID=${word.ID})}">删除</a></td>
+            </tr>
+
+
+        </table>
+        <br></br>
+        <div>
+            <a th:href="@{/learnword/love(start=1)}">[首  页]</a>
+            <a th:href="@{/learnword/love(start=${page.pageNum-1})}">[上一页]</a>
+            <a th:href="@{/learnword/love(start=${page.pageNum+1})}">[下一页]</a>
+            <a th:href="@{/learnword/love(start=${page.pages})}">[末  页]</a>
+        </div>
+        <br></br>
+        <form action="addlove" method="post">
+
+            word: <input name="word"/>
+            <button type="submit">添加</button>
+
+        </form>
+    </div>
+</body>
+</html>

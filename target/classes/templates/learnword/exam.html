@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>梦呓单词</title>
+    <link rel="icon" th:href="@{/style/images/title.ioc}" type="image/x-iocn" />
+    <link rel="stylesheet" th:href="@{/style/css/main.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{/style/css/nav.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{/static/style/css/font-awesome.min.css}" type="text/css" />
+    <script type="text/javascript" th:src="@{/style/js/jquery-2.1.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/style/js/main.js}"></script>
+    <script>
+        /*<![CDATA[*/
+        function next(){
+            var res = document.getElementById("answer");
+            var p1 = document.getElementById('p1');
+            if(res.value !== p1.innerText){
+                res.value="";
+                alert("答案错误");
+                return;
+            }
+            var p2 = document.getElementById('p2');
+            var p3 = document.getElementById('p3');
+            var p4 = document.getElementById('p4');
+            $.ajax({
+                type : "GET",
+                url : "/learnword/examget",
+                dataType : "json",
+                success : function(data) {
+                    p1.innerText=data.word;
+                    p2.innerText=data.meaning;
+                    p3.innerText=data.en;
+                    p4.innerText=data.ch;
+                    res.value="";
+                }
+            });
+        }
+
+        function tip(){
+            var p1 = document.getElementById('p1');
+            alert(p1.innerText);
+        }
+
+        /*]]>*/
+    </script>
+</head>
+<body>
+<div class="nav">
+    <div class="nav-main">
+        <a class="logo" href="#"><img th:src="@{/style/images/logo.png}"/></a>
+        <ul style="width: 45%">
+            <li><a href="/learnword/">首页</a></li>
+            <li><a href="/learnword/word">背单词</a></li>
+            <li><a href="/learnword/review">复习</a></li>
+            <li><a href="/learnword/exam">考试</a></li>
+            <li><a href="/learnword/love">收藏</a></li>
+        </ul>
+        <form action="/learnword/search">
+            <input type="text" name="search" placeholder="查词" />
+            <input class="search" type="image" th:src="@{/style/images/search.png}" />
+        </form>
+        <div id="select" onmouseover="overDiv()" onmouseout="outDiv()">
+            <a class="name" href="#" th:text="${user}?${user.username}:用户名">用户名<img th:src="@{/style/images/navdown.png}"/></a>
+            <div id="select2">
+                <div class="first">
+                    <a href="/learnword/guide">设置向导</a>
+                    <a href="/logout">退出登录</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- 导航栏 -->
+<div style="height:110px;width:100%"></div>
+<!-- 填充导航固定布局 -->
+<div th:if="${word}" class="word-main">
+    <div  id="word" style="margin-bottom: 10px; margin-top: 10px; text-align: center">
+        <font size="6" >word:&nbsp;</font><input type="text" name="answer" id="answer" style="height: 30px; width: 200px; font-size: 30px; line-height: 30px" />
+        <h1 align="center" id="p1" th:text="${word.Word}" style="display: none">ds</h1><!-- 显示单词 -->
+    </div>
+    <div class="word-main-explain">
+        <span>&nbsp;&nbsp;单词解释</span>
+        <div class="explain" id="p2" th:text="${word.meaning}">
+            全力以赴, 竭尽全力
+        </div>
+    </div>
+    <div class="word-main-example">
+        <span>&nbsp;&nbsp;例句</span>
+        <div class="example" >
+            <p id="p3" th:text="${lx[0]}"></p>
+            <br/>
+            <p id="p4" th:text="${lx[1]}"></p>
+        </div>
+    </div>
+    <div style="width:100%;height: 50px"></div>
+    <div class="word-main-select">
+        <button  class="button1" onclick="next()">
+            <font size="5">下一个</font>
+        </button>
+        <button  class="button2" onclick="tip()">
+            <font size="5">答案</font>
+        </button>
+    </div>
+</div>
+<h1 th:if="${word == null}" align="center">抱歉，您没有可复习的单词</h1>
+</body>
+</html>
