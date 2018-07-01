@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 @Mapper
 public interface UserMapper {
-    @Insert("insert into user(username, password,email) values(#{username},#{password},#{email})")
+    @Insert("insert into user(username, password, email) values(#{username},#{password},#{email})")
     int add(User user);
 
     @Update("update user set password=#{password},email=#{email},level=#{level},num=#{num},havelearnt=#{havelearnt} where username = #{username}")

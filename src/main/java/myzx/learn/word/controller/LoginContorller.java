@@ -25,6 +25,7 @@ public class LoginContorller {
         Map<String,String> map =new HashMap<>();
         String userName=request.getParameter("username");
         String password=request.getParameter("password");
+        String email=request.getParameter("email");
         if(userName.equals("")||password.equals("")){
             map.put("result","0");
             return map;
@@ -32,6 +33,8 @@ public class LoginContorller {
         User user = new User();
         user.setUsername(userName);
         user.setPassword(password);
+        user.setEmail(email);
+
         try {
             if(userService.add(user)==1){
                 request.getSession().setAttribute("user", user);

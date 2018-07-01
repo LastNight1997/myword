@@ -6,6 +6,7 @@
     <link rel="icon" th:href="@{/style/images/title.ioc}" type="image/x-iocn" />
     <link rel="stylesheet" th:href="@{/style/css/nav.css}" type="text/css" />
     <link rel="stylesheet" th:href="@{/static/style/css/font-awesome.min.css}" type="text/css" />
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <script type="text/javascript" th:src="@{/style/js/jquery-2.1.1.min.js}"></script>
     <script type="text/javascript" th:src="@{/style/js/main.js}"></script>
 </head>
@@ -37,8 +38,8 @@
         </div>
     </div>
     <div></div>
-    <div style="width:600px;margin:20px auto; text-align: center">
-        <table align='center' border='1' cellspacing='0' >
+    <div style="width:1000px;margin:20px auto; text-align: center">
+        <table class="table" >
             <tr>
                 <td>word</td>
                 <td>meaning</td>
@@ -60,11 +61,12 @@
             <a th:href="@{/learnword/love(start=${page.pages})}">[末  页]</a>
         </div>
         <br></br>
-        <form action="addlove" method="post">
-
-            word: <input name="word"/>
-            <button type="submit">添加</button>
-
+        <form action="addlove" method="post" class="form-inline">
+            <div class="form-group">
+                <label for="word">word</label>
+                <input type="text" class="form-control" id="word" name="word"/>
+            </div>
+            <button type="submit" class="btn btn-default">添加</button>
         </form>
     </div>
 </body>

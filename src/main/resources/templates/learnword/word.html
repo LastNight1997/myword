@@ -14,8 +14,6 @@
 		function love(){
 			var element = document.getElementById('love');
 			if(element.getAttribute("align")==="nolove"){
-				element.setAttribute("align","love");
-				element.src="/style/images/love.png";
                 $.ajax({
                     type : "POST",
                     url : "/learnword/addlove",
@@ -24,7 +22,8 @@
                     dataType : "json",
                     success : function(data) {
                         if(data.result==="1"){
-                            alert("收藏成功");
+                            element.setAttribute("align","love");
+                            element.src="/style/images/love.png";
                         }else{
                             alert("收藏失败")
 						}
@@ -33,8 +32,6 @@
 
 			}
 			else{
-				element.setAttribute("align","nolove");
-				element.src="/style/images/love-empty.png";
                 $.ajax({
                     type : "POST",
                     url : "/learnword/deletelove",
@@ -43,7 +40,8 @@
                     dataType : "json",
                     success : function(data) {
                         if(data.result==="1"){
-                            alert("删除成功");
+                            element.setAttribute("align","nolove");
+                            element.src="/style/images/love-empty.png";
                         }else{
                             alert("删除失败")
                         }

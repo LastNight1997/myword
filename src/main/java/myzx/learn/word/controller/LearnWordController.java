@@ -106,7 +106,10 @@ public class LearnWordController {
     public ModelAndView review(HttpServletRequest request, HttpServletResponse response){
         ModelAndView modelAndView = new ModelAndView("/learnword/review");
         User user =(User)request.getSession().getAttribute("user");
+        modelAndView.addObject("user",user);
         Word word = wordService.findLearntByName(user.getUsername());
+        if (word==null)
+            return modelAndView;
         request.getSession().setAttribute("reviewID",word.getID());
         String[] lx=word.getLx().split("/r/n");
         if(lx.length<2) {
@@ -116,7 +119,6 @@ public class LearnWordController {
         }
         modelAndView.addObject("word",word);
         modelAndView.addObject("lx",lx);
-        modelAndView.addObject("user",user);
         return modelAndView;
     }
 
@@ -294,7 +296,7 @@ public class LearnWordController {
                              HttpServletRequest request){
         User user =(User)request.getSession().getAttribute("user");
         PageHelper.startPage(start,size);
-        List<Word> words=wordService.findLoveByName("admin");
+        List<Word> words=wordService.findLoveByName(user.getUsername());
         PageInfo<Word> page = new PageInfo<>(words);
         ModelAndView modelAndView = new ModelAndView("/learnword/love");
         modelAndView.addObject("page",page);
