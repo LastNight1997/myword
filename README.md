@@ -11,7 +11,7 @@
 
 进入首页后，点击导航栏右侧的注册按钮：
 
-![img](file:///C:/Users/XSJ/AppData/Local/Temp/msohtmlclip1/01/clip_image002.jpg)
+![img](https://github.com/LastNight1997/myword/raw/master/img/注册按钮.png)
 
 出现如下注册窗口：
 
